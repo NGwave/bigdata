@@ -1,0 +1,10 @@
+NEW PLAN
+- studies showed MongoDB cannot be used in this project because of irrational amounts of work that needs to be done in order to use it (even
+when using Talend Studio)
+- instead, new project plan requires:
+DATA IMPORT MODULE
+- converts data from .xls files to .csv files (probably C# app. Probably)
+DATA STORAGE
+- data is stored in .csv files
+
+all other operations with data are performed in R. So far, R modules are being tested on the lesser amount of data
