@@ -4,6 +4,10 @@ when using Talend Studio)
 - instead, new project plan requires:
 DATA IMPORT MODULE
 - converts data from .xls files to .csv files (probably C# app. Probably)
+basic functions:
+- read the info from folder name and add it to a file name
+- create and additional .txt with folder names to be later imported into R
+- folder names contains essential data!!
 DATA STORAGE
 - data is stored in .csv files
 
