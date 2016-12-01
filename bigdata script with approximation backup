@@ -1,0 +1,71 @@
+
+#import data from CSV--updated for more data, works
+w<-267
+N<-1
+maxw<-0
+maxi<-0
+maxind<-1
+df<- read.csv2(paste0(1,".csv"), header = TRUE);
+fwhm<-0
+newvar<-c(id=1,wavelength=w, maxint=maxi,maxwave=maxw,maxindex=maxind,df,FWHM=fwhm)
+newvar$Date<-newvar$Date[[1]]
+newvar$Place<-newvar$Place[[1]]
+probes<-list(newvar)
+for (i in 2:N)
+{
+  
+  df<- read.csv2(paste0(i,".csv"), header = TRUE);
+  newvar<-list(id=i,wavelength=w,maxint=maxi,maxwave=maxw,maxindex=maxind,df,FWHM=fwhm)
+  newvar$Date<-newvar$Date[[1]]
+  newvar$Place<-newvar$Place[[1]]
+  probes[[i]]<-newvar #id, excitation wave length, the relation between registration wave length and intensity
+}
+#finding humic peak -- updated for saving data, works
+for (i in 1:N)
+{
+  dif<-probes[[i]]$Wave[1]
+  max_index<-1
+for( j in 203:243)
+  if (probes[[i]]$Intencity[j]>probes[[i]]$Intencity[max_index])
+     if ((w-10>=probes[[i]]$Wave[max_index])||(w+10<=probes[[i]]$Wave[max_index]))
+           max_index=j
+  probes[[i]]$maxwave<-probes[[i]]$Wave[max_index]
+  probes[[i]]$maxint<-probes[[i]]$Intencity[max_index]
+  probes[[i]]$maxindex<-max_index
+  #approximation
+  m<-probes[[i]]$maxindex
+  m2<-m+100
+for(j in m:m2)
+{
+ max_index->probes[[i]]$maxindex
+   if (probes[[i]]$Intencity[j] <(probes[[i]]$maxint/2))
+  {
+    probes[[i]]$FWHM=(probes[[i]]$Wave[j]-probes[[i]]$maxwave)
+      break();
+   }
+ 
+}
+   
+  mean<-probes[[i]]$maxwave
+ # probes[[i]]$FWHM<-probes[[i]]$FWHM/2
+  sd<-probes[[i]]$FWHM/((2.35)^0.5)+9 
+  x<-probes[[i]]$Wave
+  normals<-(probes[[i]]$maxint*125/(sqrt(2*pi)*sd))*exp(-((x - mean)^2/((2)*sd^2)))
+  
+  #remember who you are
+  remember1<-probes[[i]]$Intencity[320-dif]
+  remember2<-probes[[i]]$Intencity[350-dif]
+  remember3<-probes[[i]]$Intencity[320-dif]-normals[320-dif]
+  remember4<-probes[[i]]$Intencity[350-dif]-normals[350-dif]
+  remember5<-probes[[i]]$maxint
+  remember6<-probes[[i]]$mavwave
+  remember7<-remember3/remember5
+  remember8<-remember4/remmeber5
+
+  
+  
+  
+  }
+  
+
+
